@@ -9,7 +9,7 @@ exports.create = (req, res) => {
     password: req.body.password
   }).then(user => {    
     // Send created customer to client
-    res.send(user);
+    res.json('them user thanh cong');
     
   });
 };
