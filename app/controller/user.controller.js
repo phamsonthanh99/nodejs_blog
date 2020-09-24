@@ -26,7 +26,8 @@ exports.findAll = (req, res) => {
  
 // Find a Customer by Id
 exports.findOne = (req, res) => {  
-    User.findOne({ where: { id: req.params.userId } }).then(user => {
+    const id = req.params.userId;
+    User.findOne({ where: { id: id } }).then(user => {
     res.send(user);
   })
 };
