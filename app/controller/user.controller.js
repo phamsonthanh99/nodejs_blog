@@ -31,12 +31,12 @@ exports.findOne = (req, res) => {
     res.send(user);
   })
 };
- 
+
 // Update a Customer
 exports.update = (req, res) => {
   const id = req.params.userId;
   User.update( { username: req.body.username, password: req.body.password }, 
-           { where: {id: req.params.userId} }
+           { where: {id: id} }
            ).then(() => {
            res.status(200).send("updated successfully a user with id = " + id);
            });
