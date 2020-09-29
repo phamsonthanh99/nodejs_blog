@@ -1,5 +1,5 @@
 const db = require('../config/db.config.js');
-//const Customer = db.customers;
+const Customer = db.customers;
 const User = db.user;
 // Post a User
 exports.create = (req, res) => {  
@@ -7,7 +7,7 @@ exports.create = (req, res) => {
   User.create({  
     username: req.body.username,
     password: req.body.password
-  }).then(user => {    
+  },{include: [Customer]}).then(user => {    
     // Send created customer to client
     res.json('them user thanh cong');
     
@@ -17,7 +17,12 @@ exports.create = (req, res) => {
 // FETCH all Customers
 exports.findAll = (req, res) => {
   User.findAll({
-    attributes: ['id', 'username']
+    attributes: [ 'id', 'username'],
+    include: [{
+      model: Customer,
+      where: {fk_userId: db.Sequelize.col('user.id')},
+      attributes: ['firstname', 'lastname', 'age']
+    }]
   }).then(user => {
     // Send all customers to Client
     res.send(user);
