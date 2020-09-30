@@ -21,3 +21,13 @@ exports.createValidator = (req, res, next) => {
     }
     next();
 }
+
+exports.updateValidator = (req, res, next) => {
+    const body = req.body;
+    const result = validSchema.validate(body);
+    if(result.error){
+        res.json(result.error.details);
+        return;
+    }
+    next();
+}

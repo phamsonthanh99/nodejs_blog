@@ -13,7 +13,7 @@ module.exports = function(app) {
     app.get('/api/user/:userId', user.findOne);
  
     // Update a Customer with Id
-    app.put('/api/user/:userId', user.update);
+    app.put('/api/user/:userId',valid.updateValidator, user.update);
  
     // Delete a Customer with Id
     app.delete('/api/user/:userId', user.delete);
