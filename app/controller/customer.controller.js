@@ -21,31 +21,45 @@ exports.create = (req, res) => {
  
 // FETCH all Customers
 exports.findAll = (req, res) => {
-  // pagination 
+  // Pagination 
   var page = req.query.page;
   var page_size = req.query.page_size;
-  if(page){
+  if(page, page_size){
     page = parseInt(page);
-  }
-  if(page_size){
     page_size = parseInt(page_size);
+    
+    Customer.findAll({
+      limit: page_size,
+      offset: page_size*page,
+      where: {},
+      attributes: [['id', 'id'], 'firstname', 'lastname', 'age'],
+      include: [{
+        model: User,
+        where: {fk_userId: db.Sequelize.col('user.id')},
+        attributes: ['id', 'username']
+      }]
+    }).then(customers => {
+      // Send all customers to Client
+      res.send(customers);
+    });
   }
+  else{
 
-
-  Customer.findAll({
-    limit: page_size,
-    offset: page_size*page,
-    where: {},
-    attributes: [['id', 'id'], 'firstname', 'lastname', 'age'],
-    include: [{
-      model: User,
-      where: {fk_userId: db.Sequelize.col('user.id')},
-      attributes: ['id', 'username']
-    }]
-  }).then(customers => {
-    // Send all customers to Client
-    res.send(customers);
-  });
+    Customer.findAll({
+      // limit: page_size,
+      // offset: page_size*page,
+      // where: {},
+      attributes: [['id', 'id'], 'firstname', 'lastname', 'age'],
+      include: [{
+        model: User,
+        where: {fk_userId: db.Sequelize.col('user.id')},
+        attributes: ['id', 'username']
+      }]
+    }).then(customers => {
+      // Send all customers to Client
+      res.send(customers);
+    });
+  }
 };
  
 // Find a Customer by Id
