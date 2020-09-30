@@ -1,6 +1,7 @@
 const db = require('../config/db.config.js');
 const Customer = db.customers;
 const User = db.user;
+
 // Post a Customer
 exports.create = (req, res) => {  
   // Save to MySQL database
@@ -20,7 +21,21 @@ exports.create = (req, res) => {
  
 // FETCH all Customers
 exports.findAll = (req, res) => {
+  // pagination 
+  var page = req.query.page;
+  var page_size = req.query.page_size;
+  if(page){
+    page = parseInt(page);
+  }
+  if(page_size){
+    page_size = parseInt(page_size);
+  }
+
+
   Customer.findAll({
+    limit: page_size,
+    offset: page_size*page,
+    where: {},
     attributes: [['id', 'id'], 'firstname', 'lastname', 'age'],
     include: [{
       model: User,
