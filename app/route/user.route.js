@@ -2,8 +2,9 @@ module.exports = function(app) {
  
     //const customers = require('../controller/user.controller.js');
     const user = require('../controller/user.controller');
+    const valid = require('../validate/user.validate');
     // Create a new Customer
-    app.post('/api/user', user.create);
+    app.post('/api/user',valid.createValidator, user.create);
  
     // Retrieve all Customer
     app.get('/api/user', user.findAll);
