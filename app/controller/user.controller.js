@@ -21,7 +21,7 @@ exports.findAll = (req, res) => {
     include: [{
       model: Customer,
       where: {fk_userId: db.Sequelize.col('user.id')},
-      attributes: ['firstname', 'lastname', 'age']
+      attributes: ['id', 'firstname', 'lastname', 'age']
     }]
   }).then(user => {
     // Send all customers to Client
