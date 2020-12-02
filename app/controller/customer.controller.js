@@ -68,7 +68,6 @@ exports.findOne = (req, res) => {
     res.send(customer);
   })
 };
- 
 // Update a Customer
 exports.update = (req, res) => {
   const id = req.params.customerId;
